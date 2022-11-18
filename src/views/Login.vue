@@ -13,7 +13,7 @@
             <el-input type="password" v-model="userForm.password" placeholder="请输入密码" show-password ></el-input>
           </el-col>
         </el-form-item>
-        <el-row>
+        <el-row style="margin-left: 170px">
           <el-button type="primary" @click="submitForm('userForm')">登录</el-button>
           <router-link to="/register" class="link">注册</router-link>
         </el-row>
@@ -84,5 +84,9 @@ export default {
   .rg_layout
   {
     margin-top: 5%;
+  }
+  h1
+  {
+    padding-left: 80px;
   }
 </style>

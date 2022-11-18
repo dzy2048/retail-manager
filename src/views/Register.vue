@@ -18,9 +18,11 @@
             <el-input type="password" v-model="registerForm.checkPassword" placeholder="请再次输入密码" show-password ></el-input>
           </el-col>
         </el-form-item>
-        <el-checkbox v-model="authority">管理员</el-checkbox>
         <el-form-item>
-          <el-button type="primary" @click="submitForm(registerForm)">注册</el-button>
+          <el-row>
+            <el-checkbox v-model="authority">管理员</el-checkbox>
+            <el-button type="primary" @click="submitForm(registerForm)">注册</el-button>
+          </el-row>
         </el-form-item>
       </el-form>
     </div>
@@ -86,5 +88,17 @@ export default {
   .rg_layout
   {
     margin-top: 5%;
+  }
+  h1
+  {
+    padding-left: 80px;
+  }
+  label.el-checkbox
+  {
+    margin-left: 70px;
+  }
+  .el-button
+  {
+    margin-left: 50px;
   }
 </style>
