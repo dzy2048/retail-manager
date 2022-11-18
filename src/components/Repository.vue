@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="top">
-
+      <h1>仓库管理</h1>
     </div>
     <div class="foot">
 

@@ -1,7 +1,9 @@
 <template>
   <div id="index">
     <el-container>
-      <el-header>Header</el-header>
+      <el-header>
+        <Top></Top>
+      </el-header>
       <el-container>
         <el-aside>
           <Aside></Aside>

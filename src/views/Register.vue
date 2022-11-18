@@ -18,6 +18,7 @@
             <el-input type="password" v-model="registerForm.checkPassword" placeholder="请再次输入密码" show-password ></el-input>
           </el-col>
         </el-form-item>
+        <el-checkbox v-model="authority">管理员</el-checkbox>
         <el-form-item>
           <el-button type="primary" @click="submitForm(registerForm)">注册</el-button>
         </el-form-item>
@@ -34,7 +35,8 @@ export default {
       registerForm:{
         username: '',
         password: '',
-        checkPassword: ''
+        checkPassword: '',
+        authority: true
       },
       rules: {
         username: [
@@ -65,20 +67,20 @@ export default {
 </script>
 
 <style scoped>
-  .rg_layout
-  {
-    width: 900px;
-    height: 500px;
-    border: 5px solid #EEEEEE;
-    background-color: white;
-    /*水平居中*/
-    margin: auto;
-    margin-top: 15px;
-  }
-  .rg_center
-  {
-    width:450px;
-    padding-left:22%;
-    padding-top:10%;
-  }
+.rg_layout
+{
+  width: 900px;
+  height: 500px;
+  border: 5px solid #EEEEEE;
+  background-color: white;
+  /*水平居中*/
+  margin: auto;
+  margin-top: 15px;
+}
+.rg_center
+{
+  width:450px;
+  padding-left:22%;
+  padding-top:10%;
+}
 </style>
