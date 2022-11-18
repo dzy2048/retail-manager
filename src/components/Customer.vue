@@ -160,12 +160,13 @@ export default {
   },
   methods: {
     handleDelete(index, rows){
-      this.dialogVisible_delete = true;
-      if (this.comitDelete == true)
-      {
-        rows.splice(index, 1);
-        this.comitDelete = false;
-      }
+      this.$confirm('确定要删除吗？','提示',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        rows.splice(index,1);
+      })
     }
   }
 }

@@ -81,4 +81,8 @@ export default {
   {
     margin-top:10%;
   }
+  .rg_layout
+  {
+    margin-top: 5%;
+  }
 </style>

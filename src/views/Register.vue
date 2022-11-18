@@ -67,20 +67,24 @@ export default {
 </script>
 
 <style scoped>
-.rg_layout
-{
-  width: 900px;
-  height: 500px;
-  border: 5px solid #EEEEEE;
-  background-color: white;
-  /*水平居中*/
-  margin: auto;
-  margin-top: 15px;
-}
-.rg_center
-{
-  width:450px;
-  padding-left:22%;
-  padding-top:10%;
-}
+  .rg_layout
+  {
+    width: 900px;
+    height: 500px;
+    border: 5px solid #EEEEEE;
+    background-color: white;
+    /*水平居中*/
+    margin: auto;
+    margin-top: 15px;
+  }
+  .rg_center
+  {
+    width:450px;
+    padding-left:22%;
+    padding-top:10%;
+  }
+  .rg_layout
+  {
+    margin-top: 5%;
+  }
 </style>

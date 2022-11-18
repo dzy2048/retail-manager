@@ -3,7 +3,7 @@
     <div class="top">
       <el-form :inline="true">
         <el-form-item label="订单号">
-          <el-input type="text" v-model="username" ></el-input>
+          <el-input type="text" v-model="username"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary">查询</el-button>
