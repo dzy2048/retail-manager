@@ -1,5 +1,12 @@
 <template>
-  <h1>仓库管理</h1>
+  <div>
+    <div class="top">
+
+    </div>
+    <div class="foot">
+
+    </div>
+  </div>
 </template>
 
 <script>

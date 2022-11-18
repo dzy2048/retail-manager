@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div id="index">
     <el-container>
       <el-header>Header</el-header>
       <el-container>
         <el-aside>
           <Aside></Aside>
         </el-aside>
-        <el-main>
+        <el-main style="min-height:calc(100vh - 60px)">
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -25,11 +25,6 @@ export default {
     Aside
   },
   data() {
-    const item = {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄'
-    };
     return {
       tableData: Array(20).fill(item)
     }
@@ -37,15 +32,20 @@ export default {
 }
 </script>
 
-<style>
+<style type="text/css">
   .el-header {
     background-color: #B3C0D1;
     color: #333;
     line-height: 60px;
   }
-
   .el-aside {
     color: #333;
+    height: 100%;
+  }
+  html,body,.el-container,#index
+  {
+    padding: 0px;
+    margin: 0px;
     height: 100%;
   }
 </style>

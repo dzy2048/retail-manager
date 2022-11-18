@@ -51,7 +51,7 @@ export default {
 <style scoped>
   .el-menu
   {
-    overflow: hidden;
+    min-height: calc(100vh - 60px);
   }
   .router-link
   {
