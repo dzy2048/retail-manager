@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
     @TableId(type = IdType.AUTO)//主键自增
-    private Integer user_id;
+    private Integer userId;
     private String username;
     private String password;
     private String authority;

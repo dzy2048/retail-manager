@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/register")
 public class registerController {
     @Resource
     UserMapper userMapper;
-    @PostMapping
+
+    @PostMapping("/register")
     public Result<?> register(@RequestBody User userP)
 //注册要审核吗
     {
