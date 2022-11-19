@@ -115,6 +115,8 @@
 </template>
 
 <script>
+import request from "@/utils/request";
+
 export default {
   name: "Customer",
   data() {
@@ -126,34 +128,9 @@ export default {
       comitDelete: false,
       tableData: [
         {
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          phone: '12345'
-        },
-        {
-          name: '赵小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          phone: '12345'
-        },
-        {
-          name: '孙小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          phone: '12345'
-        },
-        {
-          name: '李小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          phone: '12345'
-        },
-        {
-          name: '章小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          phone: '12345'
-        },
-        {
-          name: '张小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          phone: '12345'
+          name :'123',
+          phone: '123456',
+          address: 'asdas'
         }
       ]
     }
@@ -168,6 +145,14 @@ export default {
         rows.splice(index,1);
       })
     }
+  },
+  created() {
+    request.get('/api/customer').then(res => {
+      this.tableData = res.data.tableData;
+    })
+    .catch(function(error){
+      console.log(error);
+    });
   }
 }
 </script>

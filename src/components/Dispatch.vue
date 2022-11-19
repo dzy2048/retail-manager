@@ -1,23 +1,18 @@
 <template>
   <div>
     <div class="left">
-      <el-dropdown trigger="click">
-        <el-button type="primary">
-          选择仓库<i class="el-icon-arrow-down el-icon--right"></i>
-        </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>仓库1</el-dropdown-item>
-          <el-dropdown-item>仓库2</el-dropdown-item>
-          <el-dropdown-item>仓库3</el-dropdown-item>
-          <el-dropdown-item>仓库4</el-dropdown-item>
-          <el-dropdown-item>仓库5</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <el-form :inline="true">
+        <el-form-item label="仓库号">
+          <el-input type="text"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary">查询</el-button>
+        </el-form-item>
+      </el-form>
       <el-table
         :data="tableData_target"
-        height="400"
-        border
-        style="width: 100%">
+        height="500"
+        border>
         <el-table-column
           prop="name"
           label="商品名称"
@@ -27,29 +22,34 @@
           prop="quantity"
           label="数量">
         </el-table-column>
+        <el-table-column
+          fixed="right"
+          label="操作"
+          width="60">
+          <template slot-scope="scope">
+            <el-button type="text" size="small">调度</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
+    <!--中间区域-->
     <div class="center">
-      <h2>调度</h2>
+      <el-button type="primary">&lt;</el-button>
+      <el-button type="primary">&gt;</el-button>
     </div>
     <div class="right">
-      <el-dropdown trigger="click">
-        <el-button type="primary">
-          选择仓库<i class="el-icon-arrow-down el-icon--right"></i>
-        </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>仓库1</el-dropdown-item>
-          <el-dropdown-item>仓库2</el-dropdown-item>
-          <el-dropdown-item>仓库3</el-dropdown-item>
-          <el-dropdown-item>仓库4</el-dropdown-item>
-          <el-dropdown-item>仓库5</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <el-form :inline="true">
+        <el-form-item label="仓库号">
+          <el-input type="text"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary">查询</el-button>
+        </el-form-item>
+      </el-form>
       <el-table
         :data="tableData_dispatch"
-        height="400"
-        border
-        style="width: 100%">
+        height="500"
+        border>
         <el-table-column
           prop="name"
           label="商品名称"
@@ -125,10 +125,15 @@ export default {
   }
   .center,.right
   {
-    margin-left: 20px;
+    margin-left: 40px;
+  }
+  .center
+  {
+    padding-top: 20%;
   }
   .el-table
   {
-    margin-top: 40px;
+    margin-top: 20px;
+    width: 420px;
   }
 </style>

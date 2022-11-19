@@ -7,18 +7,16 @@
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose">
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>销售业务</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="/index/sales">开销售单</el-menu-item>
-            <el-menu-item index="/index/order">订单管理</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-menu-item index="/index/customer">
+        <el-menu-item index="/index/sales">
+          <i class="el-icon-document-remove"></i>
+          <span slot="title">开销售单</span>
+        </el-menu-item>
+        <el-menu-item index="/index/order">
           <i class="el-icon-menu"></i>
+          <span slot="title">订单管理</span>
+        </el-menu-item>
+        <el-menu-item index="/index/customer">
+          <i class="el-icon-message"></i>
           <span slot="title">客户信息</span>
         </el-menu-item>
         <el-menu-item index="/index/repository">
