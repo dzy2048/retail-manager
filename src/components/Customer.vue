@@ -126,13 +126,7 @@ export default {
       dialogVisible_delete: false,
       dialogVisible_edit: false,
       comitDelete: false,
-      tableData: [
-        {
-          name :'123',
-          phone: '123456',
-          address: 'asdas'
-        }
-      ]
+      tableData: []
     }
   },
   methods: {
@@ -147,8 +141,8 @@ export default {
     }
   },
   created() {
-    request.get('/api/customer').then(res => {
-      this.tableData = res.data.tableData;
+    request.get('http://localhost:9090/customer').then(res => {
+      this.tableData = res.tableData;
     })
     .catch(function(error){
       console.log(error);

@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import request from "@/utils/request";
+
 export default {
   name: "Login",
   data() {
@@ -43,14 +45,17 @@ export default {
   },
   methods: {
     submitForm: function(formName){
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!');
-          return false;
+      request.post("http://localhost:9090/login",this.userForm).then(res=>{
+        if (res.status === "ok")
+        {
+          this.$router.push('/index')
         }
-      });
+        else
+        {
+          this.$message.error("用户名或密码错误！")
+        }
+        console.log(res);
+      })
     }
   }
 }
