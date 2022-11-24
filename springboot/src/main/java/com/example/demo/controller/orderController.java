@@ -16,22 +16,23 @@ public class orderController {
     @Resource
     OrderMapper orderMapper;
 
-    @GetMapping("/getorder")
-    public Result<?> getOrders(@RequestParam String searchByid)
+    @GetMapping("/all")
+    @CrossOrigin
+    public Result<?> getall()
     {
-        QueryWrapper<Order> wrapper = new QueryWrapper<>();
-        wrapper.eq("customerid",searchByid);
-        List<Order> orders = orderMapper.selectList(wrapper);
-        return Result.success(orders);
+      List<Order> orders = orderMapper.selectList(null);
+      return Result.success(orders);
     }
-    @PutMapping("/pay")
-    public Result<?> pay(@RequestParam String state,@RequestParam Integer orderid)
+    @GetMapping("/byid")
+    @CrossOrigin
+    public Result<?> getById(@RequestParam Integer id)
     {
-        UpdateWrapper<Order> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("orderid",orderid).set("state", state);
-        orderMapper.update(null, updateWrapper);
-        return Result.success();
+      QueryWrapper<Order> wrapper = new QueryWrapper<>();
+      wrapper.eq("order_id",id);
+      Order order = orderMapper.selectOne(wrapper);
+      return Result.success(order);
+    }
 
-    }
+
 
 }

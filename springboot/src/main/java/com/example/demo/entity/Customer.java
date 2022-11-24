@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Customer {
     @TableId(type = IdType.AUTO)//主键自增
-    private Integer customer_id;
+    private Integer customerId;
     private String name;
     private String phone;
     private String address;

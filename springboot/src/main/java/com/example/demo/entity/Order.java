@@ -13,10 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Order {
     @TableId(type = IdType.AUTO)
-    private Integer orderid;
-    private String orderperiod;
-    private Integer userid;
-    private Integer customerid;
-    private Double totalprice;
+    private Integer orderId;
+    private String time;
+    private Integer userId;
+    private Integer customerId;
+    private Double price;
     private String state;
+    private Double profit;
 }

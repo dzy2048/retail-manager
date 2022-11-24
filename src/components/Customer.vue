@@ -7,7 +7,7 @@
           <el-input type="text" v-model="username" ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">查询</el-button>
+          <el-button type="primary" @click="query()">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="dialogVisible_add=true">新增</el-button>
@@ -23,6 +23,7 @@
         border
         style="width: 90%">
         <el-table-column type="index"></el-table-column>
+        <el-table-column prop="customerId" label="客户ID" width="90"></el-table-column>
         <el-table-column
           prop="name"
           label="姓名"
@@ -40,48 +41,37 @@
           label="操作"
           width="100">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="dialogVisible_edit = true">编辑</el-button>
-            <el-button type="text" size="small" @click="handleDelete(scope.$index,tableData)">删除</el-button>
+            <el-button type="text" size="small" @click="setId(scope.$index);dialogVisible_edit = true">编辑</el-button>
+            <el-button type="text" size="small" @click="handleDelete(scope.$index)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <!--删除的提示弹窗-->
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible_delete"
-      width="30%">
-      <span>确认删除吗？</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible_delete = false">取 消</el-button>
-        <el-button type="primary" @click="comitDelete = true;dialogVisible_delete = false">确 定</el-button>
-      </span>
-    </el-dialog>
     <!--编辑的弹窗-->
     <el-dialog
       title="编辑客户信息"
       :visible.sync="dialogVisible_edit"
       width="30%">
-      <el-form>
+      <el-form v-model="updateForm">
         <el-form-item label="姓名">
           <el-col span="10">
-            <el-input ></el-input>
+            <el-input v-model="updateForm.name"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="地址">
           <el-col span="20">
-            <el-input ></el-input>
+            <el-input v-model="updateForm.address"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="联系方式">
           <el-col span="19">
-            <el-input ></el-input>
+            <el-input v-model="updateForm.phone"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible_delete = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible_delete = false">确 定</el-button>
+        <el-button type="primary" @click="update();dialogVisible_delete = false">确 定</el-button>
       </span>
     </el-dialog>
     <!--新建用户的弹窗-->
@@ -89,26 +79,26 @@
       title="新建"
       :visible.sync="dialogVisible_add"
       width="30%">
-      <el-form>
-        <el-form-item label="姓名">
+      <el-form v-bind:model="addForm">
+        <el-form-item label="姓名" prop="name">
           <el-col span="10">
-            <el-input ></el-input>
+            <el-input v-model="addForm.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="地址">
+        <el-form-item label="地址" >
           <el-col span="20">
-            <el-input ></el-input>
+            <el-input v-model="addForm.address"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="联系方式">
           <el-col span="19">
-            <el-input ></el-input>
+            <el-input v-model="addForm.phone"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible_add = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible_add = false">确 定</el-button>
+        <el-button type="primary" @click="add();dialogVisible_add = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -126,22 +116,62 @@ export default {
       dialogVisible_delete: false,
       dialogVisible_edit: false,
       comitDelete: false,
-      tableData: []
+      tableData: [],
+      addForm:{
+        name: '',
+        address: '',
+        phone: ''
+      },
+      updateForm: {
+        customerId: '',
+        name: '',
+        address: '',
+        phone: ''
+      }
     }
   },
   methods: {
-    handleDelete(index, rows){
+    handleDelete(index){
       this.$confirm('确定要删除吗？','提示',{
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        rows.splice(index,1);
+        request.delete('http://localhost:9090/index/customer/delete',{
+          params:{
+            id: index
+          }
+        }).then(res=>{
+          location.reload();
+        })
+      })
+    },
+    query() {
+      request.get('http://localhost:9090/index/customer/find', {
+        params:{
+          username: this.username
+        }
+      }).then(res=>{
+        this.tableData = res.data;
+      })
+    },
+    add() {
+      request.post('http://localhost:9090/index/customer/add',this.addForm).then(res=>{
+        location.reload();
+      })
+    },
+    setId(index)
+    {
+      this.updateForm.customerId = index + 1;
+    },
+    update() {
+      request.put('http://localhost:9090/index/customer/update',this.updateForm).then(res=>{
+        location.reload();
       })
     }
   },
   created() {
-    request.get('http://localhost:9090/customer').then(res => {
+    request.get('http://localhost:9090/index/customer/all').then(res => {
       this.tableData = res.tableData;
     })
     .catch(function(error){

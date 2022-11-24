@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/sale")
+@RequestMapping("/index/sales")
 public class saleController {
     @Resource
     GoodMapper goodMapper;
@@ -23,34 +24,35 @@ public class saleController {
     OrderMapper orderMapper;
     @Resource
     OrderItemMapper orderItemMapper;
+    @GetMapping()
+    @CrossOrigin
+    public Result<?> selectall()
+    {
+
+      List<Good> goods = goodMapper.selectList(null);
+      return Result.success(goods);
+    }
     @GetMapping("/findgood")
-    public Result<?> findgood(@RequestParam String search)
+    @CrossOrigin
+    public Result<?> findGood(@RequestParam String goodName)
     {
         QueryWrapper<Good> wrapper = new QueryWrapper<>();
-        wrapper.eq("goodname",search);
+        wrapper.eq("good_name",goodName);
         List<Good> goods = goodMapper.selectList(wrapper);
         return Result.success(goods);
     }
-    @GetMapping("/findcustomer")
-    public Result<?> findcustomer(@RequestParam String search)
-    {
-        QueryWrapper<Customer> wrapper = new QueryWrapper<>();
-        wrapper.eq("customername",search);
-        Customer customer = customerMapper.selectOne(wrapper);
-        return Result.success(customer);
-    }
-    @PostMapping("/submit")
-    public Result<?> submit(@RequestBody OrderSubmit orderSubmit)
-    {
-        Order order = new Order();
-        order.setOrderperiod(orderSubmit.getOrderperiod());
-        order.setCustomerid(orderSubmit.getCustomerid());
-        order.setTotalprice(order.getTotalprice());
-        orderMapper.insert(order);
-        for(OrderItem orderItem : orderSubmit.getOrderitems())
-        {
-            orderItemMapper.insert(orderItem);
-        }
-        return Result.success();
-    }
+//    @PostMapping("/submit")
+//    public Result<?> submit(@RequestBody OrderSubmit orderSubmit)
+//    {
+//        Order order = new Order();
+//        order.setTime(orderSubmit.getOrderperiod());
+//        order.setcustomerId(orderSubmit.getCustomerid());
+//        order.setTotalprice(order.getTotalprice());
+//        orderMapper.insert(order);
+//        for(OrderItem orderItem : orderSubmit.getOrderitems())
+//        {
+//            orderItemMapper.insert(orderItem);
+//        }
+//        return Result.success();
+//    }
 }

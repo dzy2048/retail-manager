@@ -16,7 +16,12 @@ public class User {
     private Integer userId;
     private String username;
     private String password;
-    private String authority;
+    private Integer authority;
 
-
+    public User(String username,String password,Integer authority)
+    {
+        this.username = username;
+        this.password = password;
+        this.authority = authority;
+    }
 }

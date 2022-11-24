@@ -1,37 +1,45 @@
 package com.example.demo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.demo.commom.Result;
 import com.example.demo.entity.User;
-import com.example.demo.mapper.UserMapper;
+import com.example.demo.service.UserService;
+import com.example.demo.utils.JsonUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class registerController {
     @Resource
-    UserMapper userMapper;
+    private UserService userService;
 
     @PostMapping("/register")
-    public Result<?> register(@RequestBody User userP)
-//注册要审核吗
+    @CrossOrigin
+    public String register(@RequestBody Map<String,String> form)
     {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        System.out.println(userP.getUsername());
-        wrapper.eq("username",userP.getUsername());
-        User user = userMapper.selectOne(wrapper);
+        String username = form.get("username");
+        wrapper.eq("username",username);
+        User user = userService.getOne(wrapper);
+
+        Map<String,String> status = new HashMap<>();
         if(user != null)
         {
-            return Result.error("1","用户名已存在");
+            status.put("status","forbid");
         }
         else
         {
-            userMapper.insert(userP);
-            return Result.success();
+            User newUser = new User(username,form.get("password"),Integer.parseInt(form.get("authority")));
+            System.out.println(newUser);
+            userService.save(newUser);
+            status.put("status","ok");
         }
+        String result = JsonUtils.getJson(status);
+        return result;
     }
 }

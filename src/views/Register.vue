@@ -20,8 +20,8 @@
         </el-form-item>
         <el-form-item>
           <el-row>
-            <el-checkbox v-model="authority">管理员</el-checkbox>
-            <el-button type="primary" @click="submitForm(registerForm)">注册</el-button>
+            <el-checkbox v-model="checked">管理员</el-checkbox>
+            <el-button type="primary" @click="submitForm()">注册</el-button>
           </el-row>
         </el-form-item>
       </el-form>
@@ -30,15 +30,18 @@
 </template>
 
 <script>
+import request from "@/utils/request";
+
 export default {
   name: "Register",
   data() {
     return {
+      checked: true,
       registerForm:{
         username: '',
         password: '',
         checkPassword: '',
-        authority: true
+        authority: ''
       },
       rules: {
         username: [
@@ -54,15 +57,27 @@ export default {
     }
   },
   methods: {
-    submitForm: function(formName){
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!');
-          return false;
+    submitForm: function(){
+      if (this.checked==true)
+      {
+        this.registerForm.authority = '1'
+      }
+      else
+      {
+        this.registerForm.authority = '0'
+      }
+      console.log(this.registerForm.authority);
+      request.post('http://localhost:9090/register',this.registerForm).then(res => {
+        if (res.status === "ok")
+        {
+          this.$message.success("注册成功！")
+          this.$router.push('/')
         }
-      });
+        else
+        {
+          this.$message.error("用户名已被注册！")
+        }
+      })
     }
   }
 }

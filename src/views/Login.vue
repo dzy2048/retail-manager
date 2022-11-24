@@ -14,7 +14,7 @@
           </el-col>
         </el-form-item>
         <el-row style="margin-left: 170px">
-          <el-button type="primary" @click="submitForm('userForm')">登录</el-button>
+          <el-button type="primary" @click="submitForm()">登录</el-button>
           <router-link to="/register" class="link">注册</router-link>
         </el-row>
       </el-form>
@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    submitForm: function(formName){
+    submitForm: function(){
       request.post("http://localhost:9090/login",this.userForm).then(res=>{
         if (res.status === "ok")
         {

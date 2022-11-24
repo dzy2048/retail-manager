@@ -9,7 +9,7 @@
     </div>
     <div>
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="name" label="商品名称"/>
+        <el-table-column prop="goodName" label="商品名称"/>
         <el-table-column prop="buyPrice" label="进货价格" />
         <el-table-column prop="wholePrice" label="批发价格" />
         <el-table-column prop="sellPrice" label="零售价格" />
@@ -18,9 +18,9 @@
         <el-table-column prop="repository" label="仓库" />
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button @click="handlePrice" type="text" size="small" style="color: blue">修改价格</el-button>
-            <el-button @click="handleNum" type="text" size="small" style="color: green">修改数量</el-button>
-            <el-popconfirm title="确定删除吗？" @confirm="confirmEvent">
+            <el-button @click="handlePrice(scope.$index)" type="text" size="small" style="color: blue">修改价格</el-button>
+            <el-button @click="handleNum(scope.$index)" type="text" size="small" style="color: green">修改数量</el-button>
+            <el-popconfirm title="确定删除吗？" @confirm="confirmEvent(scope.$index)">
               <el-button type="text" slot="reference" size="small" style="color: red">删除</el-button>
             </el-popconfirm>
           </template>
@@ -38,7 +38,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="modifyPriceVisible = false">取 消</el-button>
-        <el-button type="primary" @click="modifyPrice">确 定</el-button>
+        <el-button type="primary" @click="modifyPrice()">确 定</el-button>
       </div>
     </el-dialog>
     <el-dialog title="修改数量" :visible.sync="modifyNumVisible" size="small" >
@@ -55,7 +55,7 @@
     <el-dialog title="新增商品" :visible.sync="addVisible" size="small" >
       <el-form :model="addForm" label-width="120px" size="small">
         <el-form-item label="商品名称" >
-          <el-input v-model="addForm.name" autocomplete="off" style="width:60%"></el-input>
+          <el-input v-model="addForm.goodName" autocomplete="off" style="width:60%"></el-input>
         </el-form-item>
         <el-form-item label="进货价格" >
           <el-input v-model="addForm.buyPrice" autocomplete="off" style="width:60%"></el-input>
@@ -92,80 +92,87 @@ export default {
   name: 'Repository',
   data() {
     return {
-      modifyPriceForm:'',
-      modifyNumForm:'',
-      addForm:'',
       modifyPriceVisible: false,
       addVisible:false,
       modifyNumVisible:false,
-      tableData: [
-        {
-          name: '苹果',
-          number: '3',
-          buyPrice: '36',
-        },
-        {
-          name: '华为'
-        },
-        {
-          name: '小米'
-        },
-      ],
-      input: ''
+      tableData: [],
+      input: '',
+      modifyPriceForm: {
+        id: '',
+        wholePrice: '',
+        sellPrice: ''
+      },
+      modifyNumForm: {
+        id: '',
+        number: ''
+      },
+      addForm: {
+        goodName: '',
+        buyPrice: '',
+        wholePrice: '',
+        sellPrice: '',
+        unit: '',
+        number: '',
+        repository: ''
+      }
     }
   },
   created() {
-    this.load()
+    request.get('http://localhost:9090/index/repo/all').then(res=>{
+      this.tableData = res.data;
+    })
   },
   methods:{
     searchData(){
-      this.input=''
-      this.load()
+      request.get('http://localhost:9090/index/repo/find',{
+        params:{
+          goodName: this.input
+        }
+      }).then(res=>{
+        this.tableData = res.data;
+      })
     },
-    confirmEvent(){
-
+    confirmEvent(index){
+      let temp = index + 1;
+      request.delete('http://localhost:9090/index/repo/delete',{
+        params:{
+          id: temp
+        }
+      }).then(res=>{
+        location.reload();
+      })
     },
     handleAdd(){
       this.addVisible=true
       this.addForm={}
     },
     addData(){
-       request.post("http://localhost:9090/repository",this.addForm).then(res=>{
+       request.post('http://localhost:9090/index/repo/add',this.addForm).then(res=>{
         if(res){
            this.$message.success("保存成功")
-           this.addVisible=false
          }
          else{
            this.$message.error("保存失败")
          }
+         location.reload()
        })
-      this.addVisible=false
-      this.load()
     },
-    handleNum(){
+    handleNum(index){
       this.modifyNumVisible=true
+      this.modifyNumForm.id = index + 1;
     },
     modifyNum(){
-      this.modifyNumVisible=false
-      this.load()
+      request.put('http://localhost:9090/index/repo/updatenumber',this.modifyNumForm).then(res=>{
+        location.reload();
+      })
     },
-    handlePrice(){
+    handlePrice(index){
       this.modifyPriceVisible = true
-      this.modifyPriceForm={}
+      this.modifyPriceForm.id = index + 1;
     },
     modifyPrice(){
-      this.modifyPriceVisible=false
-
-      this.load()
-    },
-    load(){
-      request.get("http://localhost:9090/repository",{
-        params:{
-          name:this.input
-        }
-      }).then(res =>{
-        console.log(res)
-        this.tableData=res.records
+      request.put('http://localhost:9090/index/repo/updateprice',this.modifyPriceForm).then(res=>{
+        location.reload();
       })
     }
   }

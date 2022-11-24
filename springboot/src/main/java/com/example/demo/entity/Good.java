@@ -13,10 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Good {
     @TableId(type = IdType.AUTO)//主键自增
-    private Integer goodid;
-    private Double bringprice;
-    private Double pifaprice;
-    private Double lingshouprice;
-    private String goodname;
+    private Integer goodId;
+    private Double buyPrice;
+    private Double wholePrice;
+    private Double sellPrice;
+    private Integer number;
+    private Integer repository;
+    private String goodName;
     private String unit;
+
 }
