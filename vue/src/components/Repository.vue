@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div>
-      <el-input v-model="input" suffix-icon="el-icon-search" placeholder="请输入商品名称" style="width:30%" ></el-input>
-      <el-button @click="searchData" style="margin: 10px" >搜索</el-button>
-    </div>
     <div style="margin:10px">
-      <el-button @click="handleAdd">新增</el-button>
+      <el-form :inline="true">
+        <el-input v-model="input" suffix-icon="el-icon-search" placeholder="请输入商品名称" style="width:30%" ></el-input>
+        <el-button type="primary" @click="searchData" style="margin: 10px" >搜索</el-button>
+        <el-button type="primary" @click="handleAdd">新增</el-button>
+      </el-form>
     </div>
     <div>
       <el-table :data="tableData" stripe style="width: 100%">

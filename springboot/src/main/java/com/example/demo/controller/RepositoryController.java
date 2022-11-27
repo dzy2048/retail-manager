@@ -57,11 +57,9 @@ public class RepositoryController {
     public Result<?> updateNumber(@RequestBody Map<String,Object> map)
     {
         Integer id = (Integer)map.get("id");
-        Integer number = Integer.parseInt((String)map.get("number"));
         QueryWrapper<Good> wrapper = new QueryWrapper<>();
         wrapper.eq("good_id",id);
         Good good = goodMapper.selectOne(wrapper);
-        good.setNumber(number);
         goodMapper.updateById(good);
         return Result.success();
     }

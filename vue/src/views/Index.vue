@@ -5,7 +5,7 @@
         <Top></Top>
       </el-header>
       <el-container>
-        <el-aside>
+        <el-aside width="200px">
           <Aside></Aside>
         </el-aside>
         <el-main style="min-height:calc(100vh - 60px)">

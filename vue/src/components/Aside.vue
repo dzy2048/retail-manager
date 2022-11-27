@@ -1,6 +1,6 @@
 <template>
   <el-row class="tac">
-    <el-col :span="12">
+    <el-col :span="18">
       <el-menu
         default-active="3"
         router
@@ -18,6 +18,10 @@
         <el-menu-item index="/index/customer">
           <i class="el-icon-message"></i>
           <span slot="title">客户信息</span>
+        </el-menu-item>
+        <el-menu-item index="/index/good">
+          <i class="el-icon-menu"></i>
+          <span slot="title">商品管理</span>
         </el-menu-item>
         <el-menu-item index="/index/repository">
           <i class="el-icon-document"></i>
@@ -55,4 +59,5 @@ export default {
   {
     text-decoration: none;
   }
+
 </style>

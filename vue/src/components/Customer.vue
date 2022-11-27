@@ -42,7 +42,7 @@
           width="100">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="setId(scope.$index);dialogVisible_edit = true">编辑</el-button>
-            <el-button type="text" size="small" @click="handleDelete(scope.$index)">删除</el-button>
+            <el-button type="text" size="small" @click="handleDelete(scope.row.customerId)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

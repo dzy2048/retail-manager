@@ -17,8 +17,6 @@ public class Good {
     private Double buyPrice;
     private Double wholePrice;
     private Double sellPrice;
-    private Integer number;
-    private Integer repository;
     private String goodName;
     private String unit;
 

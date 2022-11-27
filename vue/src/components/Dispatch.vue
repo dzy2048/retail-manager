@@ -24,18 +24,19 @@
         </el-table-column>
         <el-table-column
           fixed="right"
-          label="选择"
+          label="操作"
           width="60">
           <template slot-scope="scope">
-            <el-checkbox :value="isChecked(scope.$index,0)" @change="setSelect(scope.$index,0)"></el-checkbox>
+<!--            <el-checkbox :value="isChecked(scope.$index,0)" @change="setSelect(scope.$index,0)"></el-checkbox>-->
+            <el-button type="text" size="small">添加</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <!--中间区域-->
     <div class="center">
-      <el-button type="primary" @click="dispatch(0)">&lt;</el-button>
-      <el-button type="primary" @click="dispatch(1)">&gt;</el-button>
+      <el-button type="primary" @click="">&lt;</el-button>  <!--todo-->
+      <el-button type="primary" @click="">&gt;</el-button>
     </div>
     <div class="right">
       <el-form :inline="true">
@@ -61,10 +62,11 @@
         </el-table-column>
         <el-table-column
           fixed="right"
-          label="选择"
+          label="操作"
           width="60">
           <template slot-scope="scope">
-            <el-checkbox :value="isChecked(scope.$index,1)" @change="setSelect(scope.$index,1)"></el-checkbox>
+<!--            <el-checkbox :value="isChecked(scope.$index,1)" @change="setSelect(scope.$index,1)"></el-checkbox>-->
+            <el-button type="text" size="small">添加</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -142,22 +144,22 @@ export default {
         }
       }
     },
-    dispatch(place) {
-      if (place == 0)
-      {
-        this.moveForm.moveList = this.checked_index_right;
-        this.moveForm.target_id = this.repository_left;
-      }
-      else
-      {
-        this.moveForm.moveList = this.checked_index_left;
-        this.moveForm.target_id = this.repository_right;
-      }
-      request.post('http://localhost:9090/index/dispatch/move',this.moveForm).then(res=>{
-        this.query(0);
-        this.query(1);
-      })
-    },
+    // dispatch(place) {
+    //   if (place == 0)
+    //   {
+    //     this.moveForm.moveList = this.checked_index_right;
+    //     this.moveForm.target_id = this.repository_left;
+    //   }
+    //   else
+    //   {
+    //     this.moveForm.moveList = this.checked_index_left;
+    //     this.moveForm.target_id = this.repository_right;
+    //   }
+    //   request.post('http://localhost:9090/index/dispatch/move',this.moveForm).then(res=>{
+    //     this.query(0);
+    //     this.query(1);
+    //   })
+    // },
     query(place) {
       if(place == 0)
         this.repo = this.repository_left;

@@ -38,7 +38,6 @@ public class dispatchController {
             QueryWrapper<Good> wrapper = new QueryWrapper<>();
             wrapper.eq("good_id",(id+1));
             Good good = goodMapper.selectOne(wrapper);
-            good.setRepository(t_repo);
             goodMapper.updateById(good);
         }
         return Result.success();

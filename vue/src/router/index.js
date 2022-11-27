@@ -9,6 +9,7 @@ import Customer from '../components/Customer'
 import Order from '../components/Order'
 import Repository from "../components/Repository"
 import Dispatch from "../components/Dispatch"
+import Good from "../components/Good"
 
 Vue.use(VueRouter);
 
@@ -18,12 +19,26 @@ export default new VueRouter({
     {
       path: '/',
       name: 'home',
-      component: Login
+      component: Login,
+      meta: {
+        isLogin: false
+      }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
+      meta: {
+        isLogin: false
+      }
     },
     {
       path: '/index',
       name: 'index',
       component: Index,
+      meta: {
+        isLogin: true
+      },
       children: [
         {
           path: '/index/sales',
@@ -49,13 +64,13 @@ export default new VueRouter({
           path: '/index/dispatch',
           name: 'dispatch',
           component: Dispatch
+        },
+        {
+          path: '/index/good',
+          name: 'good',
+          component: Good
         }
       ]
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: Register
     }
   ]
 });
