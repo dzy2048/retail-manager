@@ -1,6 +1,6 @@
 # retail-manager
 
-> A Vue.js project
+> A Vue.js+SpringBoot project
 
 ## Build Setup
 

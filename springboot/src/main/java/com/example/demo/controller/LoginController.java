@@ -23,7 +23,6 @@ public class LoginController
         String username = form.get("username");
         String password = form.get("password");
 
-        System.out.println(username+"\n"+password);
 
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 
@@ -31,7 +30,7 @@ public class LoginController
         User user = userService.getOne(wrapper);
 
         Map<String,String> status = new HashMap<>();
-        String result = null;
+        String result;
 
         if(user == null)
         {
