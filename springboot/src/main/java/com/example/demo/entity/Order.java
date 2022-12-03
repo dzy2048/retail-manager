@@ -7,17 +7,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@TableName("order")
+import java.util.Date;
+
+@TableName("orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
     @TableId(type = IdType.AUTO)
     private Integer orderId;
-    private String time;
     private Integer userId;
+    private Date time;
     private Integer customerId;
-    private Double price;
+    private Double shouldPay;
+    private Double havePaid;
     private String state;
     private Double profit;
 }
