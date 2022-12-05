@@ -47,8 +47,11 @@ export default {
     methods: {
         submitForm: function () {
             request.post("http://localhost:9090/login", this.userForm).then(res => {
-                if (res.status === "ok") {
+                if (res.code === "0") {
                     this.$message.success('登录成功')
+                    sessionStorage.clear()
+                    sessionStorage.setItem('userName',res.data.username)
+                    sessionStorage.setItem('authority',res.data.authority)
                     this.$router.push('/index')
                 } else {
                     this.$message.error("用户名或密码错误！")
