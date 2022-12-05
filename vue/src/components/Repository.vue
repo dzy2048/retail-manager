@@ -9,7 +9,7 @@
             </el-form>
         </div>
         <div>
-            <el-table :data="tableData" stripe style="width: 100%">
+            <el-table :data="tableData" stripe style="width: 100%" height="500" border>
                 <el-table-column prop="goodName" label="商品名称"/>
                 <el-table-column prop="number" label="数量"/>
                 <el-table-column prop="unit" label="单位"/>

@@ -14,7 +14,7 @@
             </el-form>
         </div>
         <div class="bottom">
-            <el-table :data="tableData" stripe style="width: 100%">
+            <el-table :data="tableData" stripe style="width: 100%" height="500" border>
                 <el-table-column prop="goodName" label="商品名称"/>
                 <el-table-column prop="buyPrice" label="进货价格"/>
                 <el-table-column prop="wholePrice" label="批发价格"/>
