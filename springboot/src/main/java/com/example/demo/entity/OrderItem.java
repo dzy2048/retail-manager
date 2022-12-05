@@ -7,15 +7,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@TableName("orderitem")
+@TableName("order_item")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItem {
     @TableId(type = IdType.AUTO)
-    private Integer orderitemid;
-    private Integer orderid;
-    private Integer goodid;
-    private Double goodprice;
-    private Integer quantity;
+    private Integer itemId;
+    private Integer orderId;
+    private Integer goodId;
+    private Double goodPrice;
+    private Integer goodNumber;
 }

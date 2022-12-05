@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class registerController {
+public class RegisterController {
     @Resource
     private UserService userService;
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
-public class customerController {
+public class CustomerController {
     @Resource
     CustomerMapper customerMapper;
 

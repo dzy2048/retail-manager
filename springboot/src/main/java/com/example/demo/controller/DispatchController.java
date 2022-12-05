@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/index/dispatch")
-public class dispatchController {
+public class DispatchController {
     @Resource
     GoodMapper goodMapper;
     @Resource

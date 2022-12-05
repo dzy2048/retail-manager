@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/user")
-public class userController {
+public class UserController {
 
     @Resource
     UserMapper userMapper;

@@ -79,6 +79,7 @@ export default {
 
 .link {
     margin-left: 50px;
+    text-decoration: none;
 }
 
 .el-form {
