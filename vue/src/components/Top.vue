@@ -59,5 +59,7 @@ img:hover+.login{
     overflow: hidden;
     display: none;
     padding-left: 8px;
+    position: absolute;
+    z-index: 10;
 }
 </style>

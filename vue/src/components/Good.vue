@@ -23,7 +23,7 @@
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
                         <el-button @click="changePrice(scope.row.goodId)" type="text" size="small" style="color: blue">修改价格</el-button>
-                        <el-button @click="handleDelete(scope.row.goodId)" type="text" slot="reference" size="small" style="color: red">删除</el-button>
+<!--                        <el-button @click="handleDelete(scope.row.goodId)" type="text" slot="reference" size="small" style="color: red">删除</el-button>-->
                     </template>
                 </el-table-column>
             </el-table>
