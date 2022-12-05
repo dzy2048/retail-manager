@@ -74,13 +74,15 @@ export default {
         return {
             goodName: '',
             customer: '',
+            customerId: 0,
             totalPrice: 0,
             tableData: [],
             selectData: [],
             customerTable: [],
             sellTable: [],
             sellVisible: false,
-            customerVisible: false
+            customerVisible: false,
+            sellForm: {}
         }
     },
     created() {
@@ -112,6 +114,7 @@ export default {
         },
         setCustomer(row) {
             this.customer = row.name;
+            this.customerId = row.customerId;
             this.customerVisible = false;
         },
         handleSell() {
@@ -131,30 +134,18 @@ export default {
             }
         },
         sell() {
-            this.sellVisible = false
-            this.tableData = [
-                {
-                    goodName: '牙膏',
-                    sellPrice: '4',
-                    number: '13',
-                    unit: '管',
-                    repository: '1'
-                },
-                {
-                    goodName: '牙刷',
-                    sellPrice: '7',
-                    number: '21',
-                    unit: '支',
-                    repository: '1'
-                },
-                {
-                    goodName: '苹果',
-                    sellPrice: '3',
-                    number: '500',
-                    unit: '个',
-                    repository: '3',
-                }
-            ]
+            this.sellVisible = false;
+            this.sellForm.items = this.sellTable;
+            this.sellForm.price = this.totalPrice;
+            this.sellForm.userId = sessionStorage.getItem('userId');
+            this.sellForm.customerId = this.customerId;
+            request.post('http://localhost:9090/sales/add',this.sellForm).then(res => {
+                if (res.code === '0')
+                    this.$message.success('成功售出');
+                else
+                    this.$message.error('发生了未知错误');
+                this.load();
+            })
         },
         load() {
             request.get('http://localhost:9090/sales/all').then(res => {

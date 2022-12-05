@@ -36,7 +36,7 @@ public class LoginController {
             return Result.error("1","用户不存在");
         }
         if (user.getPassword().equals(password)) {
-            ClientUser clientUser = new ClientUser(username,user.getAuthority());
+            ClientUser clientUser = new ClientUser(username,user.getUserId(),user.getAuthority());
             return Result.success(clientUser);
         } else {
             return Result.error("1","密码错误");

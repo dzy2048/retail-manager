@@ -23,4 +23,5 @@ public class Order {
     private Double havePaid;
     private String state;
     private Double profit;
+
 }

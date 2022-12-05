@@ -51,6 +51,7 @@ export default {
                     this.$message.success('登录成功')
                     sessionStorage.clear()
                     sessionStorage.setItem('userName',res.data.username)
+                    sessionStorage.setItem('userId',res.data.userId)
                     sessionStorage.setItem('authority',res.data.authority)
                     this.$router.push('/index')
                 } else {

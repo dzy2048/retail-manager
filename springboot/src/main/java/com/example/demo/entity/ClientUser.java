@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 public class ClientUser
 {
     private String username;
+    private int userId;
     private int authority;
 }
