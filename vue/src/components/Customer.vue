@@ -41,7 +41,7 @@
                     label="操作"
                     width="100">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="setId(scope.$index);dialogVisible_edit = true">编辑
+                        <el-button type="text" size="small" @click="edit(scope.row);">编辑
                         </el-button>
                         <el-button type="text" size="small" @click="handleDelete(scope.row.customerId)"
                                    style="color:red">删除
@@ -74,7 +74,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible_delete = false">取 消</el-button>
-        <el-button type="primary" @click="update();dialogVisible_delete = false">确 定</el-button>
+        <el-button type="primary" @click="update();">确 定</el-button>
       </span>
         </el-dialog>
         <!--新建用户的弹窗-->
@@ -134,18 +134,18 @@ export default {
         }
     },
     methods: {
-        handleDelete(index) {
+        handleDelete(id) {
             this.$confirm('确定要删除吗？', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                request.delete('http://localhost:9090/index/customer/delete', {
+                request.delete('http://localhost:9090/customer/delete', {
                     params: {
-                        id: index
+                        id: id
                     }
                 }).then(res => {
-                    location.reload();
+                    this.getAll();
                 })
             })
         },
@@ -156,29 +156,37 @@ export default {
                 }
             }).then(res => {
                 this.tableData = res.data;
+                this.username = '';
             })
         },
         add() {
             request.post('http://localhost:9090/customer/add', this.addForm).then(res => {
-                location.reload();
+                this.getAll();
             })
-        },
-        setId(index) {
-            this.updateForm.customerId = index + 1;
         },
         update() {
             request.put('http://localhost:9090/customer/update', this.updateForm).then(res => {
-                location.reload();
+                this.dialogVisible_edit = false;
+                this.getAll();
             })
+        },
+        getAll() {
+            request.get('http://localhost:9090/customer/all').then(res => {
+                this.tableData = res.tableData;
+            }).catch(function (error) {
+                    console.log(error);
+                });
+        },
+        edit(row) {
+            this.dialogVisible_edit = true;
+            this.updateForm.customerId = row.customerId;
+            this.updateForm.name = row.name;
+            this.updateForm.address = row.address;
+            this.updateForm.phone = row.phone;
         }
     },
     created() {
-        request.get('http://localhost:9090/customer/all').then(res => {
-            this.tableData = res.tableData;
-        })
-            .catch(function (error) {
-                console.log(error);
-            });
+        this.getAll();
     }
 }
 </script>
