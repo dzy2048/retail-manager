@@ -1,18 +1,44 @@
 <template>
     <div>
-        <span>批发零售管理系统</span>
+        <span class="title">批发零售管理系统</span>
         <img src="../assets/user.png"  alt="user" width="25" height="25"/>
+        <div class="login" @mouseenter="enter()" @mouseleave="leave()">
+            <span>用户名: {{username}}</span><br>
+            <span>用户权限: {{auth}}</span>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: "Top"
+    name: "Top",
+    data() {
+        return {
+            username: '',
+            auth: '',
+            seen: false
+        }
+    },
+    created() {
+        if (sessionStorage.getItem('authority') === '1')
+            this.auth = '管理员'
+        else
+            this.auth = '非管理员'
+        this.username = sessionStorage.getItem('userName')
+    },
+    methods: {
+        enter() {
+            this.seen = true
+        },
+        leave() {
+            this.seen = false
+        }
+    }
 }
 </script>
 
 <style scoped>
-span {
+span.title {
     margin-top: 0px;
     margin-left: 80%;
     font-size: larger;
@@ -20,5 +46,18 @@ span {
 }
 img {
     margin-left: 3%;
+    cursor: pointer;
+}
+img:hover+.login{
+    display: block;
+}
+.login {
+    margin-left: 88%;
+    background: #FFFFFF;
+    border: 2px solid #B3C0D1;
+    width: 160px;
+    overflow: hidden;
+    display: none;
+    padding-left: 8px;
 }
 </style>
