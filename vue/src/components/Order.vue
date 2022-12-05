@@ -25,9 +25,8 @@
                         <el-popconfirm title="确定退款吗？" @confirm="refund(scope.row.orderId)">
                             <el-button type="text" slot="reference" size="small" style="color:red">退款</el-button>
                         </el-popconfirm>
-                        <el-button type="text" slot="reference" size="small" @click="handleModify(scope.row.orderId,scope.row.havePaid)">修改金额</el-button>
-                        <el-button type="text" slot="reference" size="small" @click="finish(scope.row.orderId)" style="color:green">完成</el-button>
-                        <el-button type="text" slot="reference" size="small" @click="detail">查看</el-button>
+                        <el-button type="text" slot="reference" size="small" @click="handleModify(scope.row)" style="color: brown">修改金额</el-button>
+                        <el-button type="text" slot="reference" size="small" @click="detail(scope.row.orderId)">查看</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -46,10 +45,10 @@
         <el-dialog title="订单详情" :visible.sync="orderVisible" size="small">
             <el-table :data="orderData" height="400" border style="width: 100%;height: 100%">
                 <el-table-column prop="goodName" label="商品名称" width="180"></el-table-column>
-                <el-table-column prop="sellPrice" label="零售价格"></el-table-column>
+                <el-table-column prop="wholePrice" label="批发价格"></el-table-column>
                 <el-table-column prop="number" label="数量"></el-table-column>
             </el-table>
-            <p>总价：270</p>
+            <p>总价：{{totalPrice}}</p>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="orderVisible = false">确 定</el-button>
             </div>
@@ -70,28 +69,8 @@ export default {
             modifyMoneyForm: '',
             modifyMoneyVisible: false,
             orderVisible: false,
-            orderData: [
-                {
-                    goodName: '牙刷',
-                    sellPrice: 5,
-                    number: 10
-                },
-                {
-                    goodName: '牙膏',
-                    sellPrice: 2,
-                    number: 10
-                },
-                {
-                    goodName: '苹果',
-                    sellPrice: 1,
-                    number: 100
-                },
-                {
-                    goodName: '香蕉',
-                    sellPrice: 1,
-                    number: 100
-                }
-            ],
+            totalPrice: '',
+            orderData: [],
             tableData: [],
             changeForm: {}
         }
@@ -105,7 +84,15 @@ export default {
                 this.tableData = res.data;
             })
         },
-        detail() {
+        detail(id) {
+            request.get('http://localhost:9090/order/detail',{
+                params: {
+                    orderId: id
+                }
+            }).then(res => {
+                this.orderData = res.data.orderData;
+                this.totalPrice = res.data.totalPrice;
+            })
             this.orderVisible = true;
         },
         searchById() {
@@ -125,10 +112,17 @@ export default {
             })
             this.changeForm = {};
         },
-        handleModify(id,havePaid){
-            this.modifyMoneyVisible = true;
-            this.changeForm.paid = havePaid;
-            this.changeForm.id = id;
+        handleModify(row){
+            if (row.state === '已退款')
+                this.$message.error('该订单已退款');
+            else if (row.state === '已完成')
+                this.$message.error('该订单已完成');
+            else
+            {
+                this.modifyMoneyVisible = true;
+                this.changeForm.paid = row.havePaid;
+                this.changeForm.id = row.orderId;
+            }
         },
         modifyMoney() {
             if (this.inputMoney <= this.changeForm.paid)
@@ -143,13 +137,6 @@ export default {
             })
             this.changeForm = {};
             this.inputMoney = '';
-        },
-        finish(id) {
-            this.changeForm.id = id;
-            request.put('http://localhost:9090/order/finish',this.changeForm).then(res => {
-                this.load();
-            })
-            this.changeForm = {};
         }
     }
 }
