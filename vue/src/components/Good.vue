@@ -22,8 +22,7 @@
                 <el-table-column prop="unit" label="单位"/>
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
-                        <el-button @click="changePrice(scope.row.goodId)" type="text" size="small" style="color: blue">修改价格</el-button>
-<!--                        <el-button @click="handleDelete(scope.row.goodId)" type="text" slot="reference" size="small" style="color: red">删除</el-button>-->
+                        <el-button @click="changePrice(scope.row)" type="text" size="small" style="color: blue">修改价格</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -48,8 +47,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible_add = false;addForm=''">取 消</el-button>
-                <el-button type="primary" @click="add();dialogVisible_add = false">确 定</el-button>
+                <el-button @click="dialogVisible_add = false;clearForm(addForm)">取 消</el-button>
+                <el-button type="primary" @click="add()">确 定</el-button>
             </span>
         </el-dialog>
         <!--修改表单的弹窗-->
@@ -63,8 +62,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible_update = false;updateForm=''">取 消</el-button>
-                <el-button type="primary" @click="update();dialogVisible_update = false">确 定</el-button>
+                <el-button @click="dialogVisible_update = false">取 消</el-button>
+                <el-button type="primary" @click="update()">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -98,9 +97,11 @@ export default {
         this.getAll();
     },
     methods: {
-        changePrice(id){
-            this.dialogVisible_update=true;
-            this.updateForm.goodId = id;
+        changePrice(row){
+            this.dialogVisible_update=true
+            this.updateForm.goodId = row.goodId
+            this.updateForm.wholePrice = row.wholePrice
+            this.updateForm.sellPrice = row.sellPrice
         },
         handleDelete(id) {
             this.$confirm('确定要删除吗？','提示',{
@@ -108,12 +109,12 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(()=>{
-                this.delete(id);
+                this.delete(id)
             })
         },
         getAll(){
             request.get('http://localhost:9090/good/all').then(res=>{
-                this.tableData = res.data;
+                this.tableData = res.data
             })
         },
         query(){
@@ -122,18 +123,51 @@ export default {
                     name: this.name
                 }
             }).then(res=>{
-                this.tableData = res.data;
-                this.name = '';
+                this.tableData = res.data
+                this.name = ''
             })
         },
         add(){
-            request.post('http://localhost:9090/good/add',this.addForm).then(res=>{
-                this.getAll();
-            })
+            for (let item in this.addForm)  //填写了部分项
+            {
+                if (this.addForm[item]==='')
+                {
+                    this.$message.warning('有未填项，请检查')
+                    return
+                }
+            }
+            if (parseFloat(this.addForm.wholePrice) < parseFloat(this.addForm.buyPrice)
+                || parseFloat(this.addForm.sellPrice) < parseFloat(this.addForm.buyPrice))
+            {
+                this.$confirm('零售价或批发价低于进价，你确定吗？','提示',{type:"warning"}).then(() => {
+                    request.post('http://localhost:9090/good/add',this.addForm).then(res=>{
+                        this.getAll()
+                        this.dialogVisible_add = false
+                        this.clearForm(this.addForm)
+                    })
+                })
+            }
+            else
+            {
+                request.post('http://localhost:9090/good/add',this.addForm).then(res=>{
+                    this.getAll()
+                    this.dialogVisible_add = false
+                    this.clearForm(this.addForm)
+                })
+            }
         },
         update(){
+            for (let item in this.updateForm)  //填写了部分项
+            {
+                if (this.updateForm[item]==='')
+                {
+                    this.$message.warning('有未填项，请检查')
+                    return
+                }
+            }
             request.put('http://localhost:9090/good/update',this.updateForm).then(res=>{
-                this.getAll();
+                this.getAll()
+                this.dialogVisible_update = false
             })
         },
         delete(id){
@@ -142,8 +176,14 @@ export default {
                     id: id
                 }
             }).then(res=>{
-                this.getAll();
+                this.getAll()
             })
+        },
+        clearForm(form){
+            for (let item in form)
+            {
+                form[item] = ''
+            }
         }
     }
 }

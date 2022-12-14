@@ -31,7 +31,7 @@
                     <el-button @click="repoId=inputId;inputId=''">确定</el-button>
                 </el-form-item>
             </el-form>
-            <el-table :data="importTable">
+            <el-table :data="importTable" height="400px">
                 <el-table-column prop="goodName" label="商品名称"/>
                 <el-table-column prop="buyPrice" label="进货价格"/>
                 <el-table-column prop="unit" label="单位"/>
