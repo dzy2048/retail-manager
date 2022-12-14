@@ -54,6 +54,7 @@
         <!--修改表单的弹窗-->
         <el-dialog title="修改价格" :visible.sync="dialogVisible_update" width="30%">
             <el-form v-bind:model="updateForm" size="small" label-width="100px">
+                <el-form-item :label="updateForm.goodName"/>
                 <el-form-item label="批发价格">
                     <el-input v-model="updateForm.wholePrice"></el-input>
                 </el-form-item>
@@ -77,6 +78,7 @@ export default {
         return {
             tableData: [],
             name: '',
+            buyPrice: '',
             dialogVisible_add: false,
             dialogVisible_update: false,
             addForm: {
@@ -88,6 +90,7 @@ export default {
             },
             updateForm: {
                 goodId: '',
+                goodName: '',
                 wholePrice: '',
                 sellPrice: ''
             }
@@ -100,8 +103,10 @@ export default {
         changePrice(row){
             this.dialogVisible_update=true
             this.updateForm.goodId = row.goodId
+            this.updateForm.goodName = row.goodName
             this.updateForm.wholePrice = row.wholePrice
             this.updateForm.sellPrice = row.sellPrice
+            this.buyPrice = row.buyPrice
         },
         handleDelete(id) {
             this.$confirm('确定要删除吗？','提示',{
@@ -165,10 +170,23 @@ export default {
                     return
                 }
             }
-            request.put('http://localhost:9090/good/update',this.updateForm).then(res=>{
-                this.getAll()
-                this.dialogVisible_update = false
-            })
+            if (parseFloat(this.updateForm.wholePrice) < parseFloat(this.buyPrice)
+                || parseFloat(this.updateForm.sellPrice) < parseFloat(this.buyPrice))
+            {
+                this.$confirm('零售价或批发价低于进价，你确定吗？','提示',{type:"warning"}).then(() => {
+                    request.put('http://localhost:9090/good/update',this.updateForm).then(res=>{
+                        this.getAll()
+                        this.dialogVisible_update = false
+                    })
+                })
+            }
+            else
+            {
+                request.put('http://localhost:9090/good/update',this.updateForm).then(res=>{
+                    this.getAll()
+                    this.dialogVisible_update = false
+                })
+            }
         },
         delete(id){
             request.delete('http://localhost:9090/good/delete',{
