@@ -141,6 +141,11 @@ export default {
                     return
                 }
             }
+            if (!this.checkPrice(this.addForm))
+            {
+                this.$message.error('价格不能为负数')
+                return
+            }
             if (parseFloat(this.addForm.wholePrice) < parseFloat(this.addForm.buyPrice)
                 || parseFloat(this.addForm.sellPrice) < parseFloat(this.addForm.buyPrice))
             {
@@ -170,6 +175,11 @@ export default {
                     return
                 }
             }
+            if (!this.checkPrice(this.updateForm))
+            {
+                this.$message.error('价格不能为负数')
+                return
+            }
             if (parseFloat(this.updateForm.wholePrice) < parseFloat(this.buyPrice)
                 || parseFloat(this.updateForm.sellPrice) < parseFloat(this.buyPrice))
             {
@@ -197,11 +207,17 @@ export default {
                 this.getAll()
             })
         },
-        clearForm(form){
+        clearForm(form){    //清空表单（每项变为空字符串）
             for (let item in form)
             {
                 form[item] = ''
             }
+        },
+        checkPrice(form) {  //检查表单中的价格是否合法
+            if (form.buyPrice == null)
+                return !(parseFloat(form.wholePrice) < 0 || parseFloat(form.sellPrice) < 0)
+            else
+                return !(parseFloat(form.buyPrice) < 0 || parseFloat(form.wholePrice) < 0 || parseFloat(form.sellPrice) < 0)
         }
     }
 }
