@@ -214,7 +214,7 @@ export default {
             }
         },
         checkPrice(form) {  //检查表单中的价格是否合法
-            if (form.buyPrice == null)
+            if (form.buyPrice == null)  //updateForm中没有buyPrice
                 return !(parseFloat(form.wholePrice) < 0 || parseFloat(form.sellPrice) < 0)
             else
                 return !(parseFloat(form.buyPrice) < 0 || parseFloat(form.wholePrice) < 0 || parseFloat(form.sellPrice) < 0)

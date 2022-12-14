@@ -39,9 +39,9 @@
 <script>
 export default {
     name: "Aside",
+    props: ['isLogin'],
     data() {
         return  {
-            isLogin: false
         }
     },
     methods: {
@@ -53,8 +53,7 @@ export default {
         }
     },
     created() {
-        if (sessionStorage.getItem('userName')!=null)
-            this.isLogin = true
+
     }
 }
 </script>
