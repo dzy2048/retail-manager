@@ -1,11 +1,12 @@
 <template>
     <div>
         <span class="title">批发零售管理系统</span>
-        <img src="../assets/user.png"  alt="user" width="25" height="25"/>
-        <div class="login" @mouseenter="enter()" @mouseleave="leave()">
+        <img v-if="username!=null" src="../assets/user.png"  alt="user" width="25" height="25"/>
+        <div v-if="username!=null" class="login" @mouseenter="enter()" @mouseleave="leave()">
             <span>用户名: {{username}}</span><br>
             <span>用户权限: {{auth}}</span>
         </div>
+        <el-button v-else round size="small" @click="$router.push('/')">登录</el-button>
     </div>
 </template>
 
@@ -16,7 +17,6 @@ export default {
         return {
             username: '',
             auth: '',
-            seen: false
         }
     },
     created() {
@@ -44,6 +44,10 @@ span.title {
     font-size: larger;
     font-weight: bolder;
 }
+.el-button {
+    margin-left: 2%;
+    margin-bottom: 6px;
+}
 img {
     margin-left: 3%;
     cursor: pointer;
@@ -55,7 +59,7 @@ img:hover+.login{
     margin-left: 88%;
     background: #FFFFFF;
     border: 2px solid #B3C0D1;
-    width: 160px;
+    width: 140px;
     overflow: hidden;
     display: none;
     padding-left: 8px;

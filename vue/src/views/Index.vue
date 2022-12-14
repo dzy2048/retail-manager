@@ -36,7 +36,7 @@ export default {
 
 <style type="text/css">
   .el-header {
-    background-color: #B3C0D1;
+    background-color: #5F9EA0;
     color: #333;
     line-height: 60px;
   }

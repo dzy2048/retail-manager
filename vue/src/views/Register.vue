@@ -22,10 +22,9 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item>
-                    <el-row>
-                        <el-checkbox v-model="checked">管理员</el-checkbox>
-                        <el-button type="primary" @click="submitForm()">注册</el-button>
-                    </el-row>
+                    <el-checkbox v-model="checked">管理员</el-checkbox>
+                    <el-button type="primary" size="small" @click="submitForm()">注册</el-button>
+                    <el-button type="warning" size="small" @click="$router.push('/')">返回登录</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -66,7 +65,6 @@ export default {
             } else {
                 this.registerForm.authority = '0'
             }
-            console.log(this.registerForm.authority);
             request.post('http://localhost:9090/register', this.registerForm).then(res => {
                 if (res.status === "ok") {
                     this.$message.success("注册成功！")
@@ -106,10 +104,10 @@ h1 {
 }
 
 label.el-checkbox {
-    margin-left: 70px;
+    margin-left: 50px;
 }
 
 .el-button {
-    margin-left: 50px;
+    margin-left: 30px;
 }
 </style>
