@@ -36,6 +36,7 @@ export default {
             EventBus.$emit("resetStatus",{
                 isLogin : false
             })
+            this.$router.push('/index')
         }
     }
 }
@@ -57,7 +58,7 @@ img {
     cursor: pointer;
     position: absolute;
     top: 15px;
-    z-index: 3;
+    z-index: 11;
 }
 img:hover+.userinfo{
     display: block;
@@ -77,7 +78,7 @@ img:hover+.userinfo{
     padding-left: 8px;
     position: absolute;
     top: 32px;
-    z-index: 2;
+    z-index: 10;
 }
 .infoItem {         /*解决el-header的line-height问题*/
     display: block;

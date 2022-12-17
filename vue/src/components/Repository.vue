@@ -37,7 +37,7 @@
                 <el-table-column prop="unit" label="单位"/>
                 <el-table-column label="进货数量">
                     <template slot-scope="scope">
-                        <el-input-number v-model="scope.row.selectNum" @change="" :min="0"  size="small"></el-input-number>
+                        <el-input-number v-model="scope.row.selectNum"  :min="0"  size="small"></el-input-number>
                     </template>
                 </el-table-column>
             </el-table>
@@ -78,24 +78,34 @@ export default {
         }
     },
     created() {
-        this.getAll();
+        this.loadGood();
+        this.loadRepo();
     },
     methods: {
-        getAll(){
+        loadGood(){
             request.get('http://localhost:9090/good/all').then(res => {
                 this.importTable = res.data;
             })
+        },
+        loadRepo() {
             request.get('http://localhost:9090/repo/all').then(res =>{
                 this.tableData = res.data;
             })
         },
         add(){
             this.importVisible = false;
-            this.addForm.addTable = this.importTable
+            for (let i=0 ;i<this.importTable.length ;i++)
+            {
+                if (this.importTable[i].selectNum != null && this.importTable[i].selectNum !== 0)
+                    this.addForm.addTable.splice(0,0,this.importTable[i])
+            }
             this.addForm.repoId = this.repoId
             request.post('http://localhost:9090/repo/add',this.addForm).then(res=>{
                 this.$message.success("添加成功")
-                this.getAll()
+                this.loadGood()
+                this.loadRepo()
+                this.addForm.addTable = []
+                this.repoId = ''
             })
         },
         query(){
