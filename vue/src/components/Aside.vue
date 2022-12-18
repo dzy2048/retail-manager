@@ -31,6 +31,10 @@
                     <i class="el-icon-setting"></i>
                     <span slot="title">库存调度</span>
                 </el-menu-item>
+                <el-menu-item index="/index/statistics" :disabled="!isLogin">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">数据统计</span>
+                </el-menu-item>
             </el-menu>
         </el-col>
     </el-row>
