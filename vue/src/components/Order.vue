@@ -70,6 +70,7 @@ export default {
             modifyMoneyVisible: false,
             orderVisible: false,
             totalPrice: '',
+            shouldPay: '',
             orderData: [],
             tableData: [],
             changeForm: {}
@@ -120,15 +121,17 @@ export default {
             else
             {
                 this.modifyMoneyVisible = true;
+                this.shouldPay = row.shouldPay;
                 this.changeForm.paid = row.havePaid;
+                this.inputMoney = row.havePaid;
                 this.changeForm.id = row.orderId;
             }
         },
         modifyMoney() {
-            if (this.inputMoney <= this.changeForm.paid)
+            if ((parseFloat(this.inputMoney) > parseFloat(this.shouldPay)) || (parseFloat(this.inputMoney) <= parseFloat(this.changeForm.paid)))
             {
-                this.changeForm = {};
                 this.$message.error('请输入正确的金额!');
+                return;
             }
             this.changeForm.paid = this.inputMoney
             request.put('http://localhost:9090/order/change',this.changeForm).then(res=> {
