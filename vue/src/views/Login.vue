@@ -1,31 +1,21 @@
 <template>
-    <div class="rg_layout">
-        <div class="rg_center">
-            <h1>批发零售业务管理系统</h1>
-            <el-form v-bind:model="userForm" v-bind:rules="rules" ref="userForm" status-icon label-width="100px">
-                <el-form-item label="用户名" prop="username">
-                    <el-col :span="22">
-                        <el-input type="text" v-model="userForm.username" placeholder="请输入用户名"></el-input>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-col :span="22">
-                        <el-input type="password" v-model="userForm.password" placeholder="请输入密码"
-                                  show-password></el-input>
-                    </el-col>
-                </el-form-item>
-                <el-row style="margin-left: 170px">
-                    <el-button type="primary" @click="submitForm()">登录</el-button>
-                    <router-link to="/register" class="link">注册</router-link>
-                </el-row>
-            </el-form>
+    <div class="wrapper">
+        <div style="margin: 200px auto;background-color: aliceblue;width: 350px;height: 300px;padding: 20px;border-radius: 10px">
+            <div style="margin: 20px 0;text-align: center;font-size: 24px">
+                <b>登录</b>
+            </div>
+            <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-user" v-model="userForm.username" placeholder="请输入用户名"></el-input>
+            <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-lock" show-password v-model="userForm.password" placeholder="请输入密码"></el-input>
+            <div style="margin: 20px 0;text-align: right">
+                <el-button type="primary" size="small" autocomlpete="off" @click="submitForm">登录</el-button>
+                <el-button type="warning" size="small" autocomlpete="off" @click="$router.push('/register')">注册</el-button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import request from "@/utils/request";
-
 export default {
     name: "Login",
     data() {
@@ -65,36 +55,9 @@ export default {
 </script>
 
 <style scoped>
-.rg_layout {
-    width: 900px;
-    height: 500px;
-    border: 5px solid #EEEEEE;
-    background-color: white;
-    /*水平居中*/
-    margin: auto;
-    margin-top: 15px;
-}
-
-.rg_center {
-    width: 450px;
-    padding-left: 22%;
-    padding-top: 10%;
-}
-
-.link {
-    margin-left: 50px;
-    text-decoration: none;
-}
-
-.el-form {
-    margin-top: 10%;
-}
-
-.rg_layout {
-    margin-top: 5%;
-}
-
-h1 {
-    padding-left: 80px;
+.wrapper{
+    height: 100vh;
+    background-image: linear-gradient(to bottom right,#FC466B, #3F5EFB);
+    overflow: hidden;
 }
 </style>

@@ -1,32 +1,20 @@
 <template>
-    <div class="rg_layout">
-        <div class="rg_center">
-            <h1>批发零售业务管理系统</h1>
-            <el-form v-bind:model="registerForm" v-bind:rules="rules" ref="registerForm" status-icon
-                     label-width="100px">
-                <el-form-item label="用户名" prop="username">
-                    <el-col :span="22">
-                        <el-input type="text" v-model="registerForm.username" placeholder="请输入用户名"></el-input>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-col :span="22">
-                        <el-input type="password" v-model="registerForm.password" placeholder="请输入密码"
-                                  show-password></el-input>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="确认密码" prop="password">
-                    <el-col :span="22">
-                        <el-input type="password" v-model="registerForm.checkPassword" placeholder="请再次输入密码"
-                                  show-password></el-input>
-                    </el-col>
-                </el-form-item>
-                <el-form-item>
-                    <el-checkbox v-model="checked">管理员</el-checkbox>
-                    <el-button type="primary" size="small" @click="submitForm()">注册</el-button>
-                    <el-button type="warning" size="small" @click="$router.push('/')">返回登录</el-button>
-                </el-form-item>
-            </el-form>
+    <div class="wrapper">
+        <div style="margin: 200px auto;background-color: aliceblue;width: 350px;height: 300px;padding: 20px;border-radius: 10px">
+            <div style="margin: 20px 0;text-align: center;font-size: 24px">
+                <b>注册</b>
+            </div>
+            <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-user" v-model="registerForm.username" placeholder="请输入用户名"></el-input>
+            <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-lock" show-password v-model="registerForm.password" placeholder="请输入密码"></el-input>
+            <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-lock" v-model="registerForm.checkPassword" placeholder="请再次输入密码"></el-input>
+            <el-radio-group v-model="auth" style="margin-left: 28%">
+                <el-radio label="1">管理员</el-radio>
+                <el-radio label="0">店员</el-radio>
+            </el-radio-group>
+            <div style="margin: 20px 0;text-align: right">
+                <el-button type="primary" size="small" autocomlpete="off" @click="$router.push('/')">去登录</el-button>
+                <el-button type="warning" size="small" autocomlpete="off" @click="submitForm()">注册</el-button>
+            </div>
         </div>
     </div>
 </template>
@@ -35,10 +23,10 @@
 import request from "@/utils/request";
 
 export default {
-    name: "Register",
-    data() {
+    name: "Login",
+    data(){
         return {
-            checked: true,
+            auth: '0',
             registerForm: {
                 username: '',
                 password: '',
@@ -60,11 +48,7 @@ export default {
     },
     methods: {
         submitForm: function () {
-            if (this.checked == true) {
-                this.registerForm.authority = '1'
-            } else {
-                this.registerForm.authority = '0'
-            }
+            this.registerForm.authority = this.auth
             request.post('http://localhost:9090/register', this.registerForm).then(res => {
                 if (res.status === "ok") {
                     this.$message.success("注册成功！")
@@ -79,35 +63,9 @@ export default {
 </script>
 
 <style scoped>
-.rg_layout {
-    width: 900px;
-    height: 500px;
-    border: 5px solid #EEEEEE;
-    background-color: white;
-    /*水平居中*/
-    margin: auto;
-    margin-top: 15px;
-}
-
-.rg_center {
-    width: 450px;
-    padding-left: 22%;
-    padding-top: 10%;
-}
-
-.rg_layout {
-    margin-top: 5%;
-}
-
-h1 {
-    padding-left: 80px;
-}
-
-label.el-checkbox {
-    margin-left: 50px;
-}
-
-.el-button {
-    margin-left: 30px;
+.wrapper{
+    height: 100vh;
+    background-image: linear-gradient(to bottom right,#FC466B, #3F5EFB);
+    overflow: hidden;
 }
 </style>
