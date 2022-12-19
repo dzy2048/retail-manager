@@ -18,12 +18,12 @@
         </div>
         <el-dialog title="进货" :visible.sync="importVisible" size="small">
             <el-form :inline="true">
-                <el-form-item>
-                    <el-input v-model="goodName"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="">查询</el-button>
-                </el-form-item>
+<!--                <el-form-item>-->
+<!--                    <el-input v-model="goodName"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item>-->
+<!--                    <el-button type="primary" @click="">查询</el-button>-->
+<!--                </el-form-item>-->
                 <el-form-item label="目标仓库ID">
                     <el-input v-model="inputId"></el-input>
                 </el-form-item>

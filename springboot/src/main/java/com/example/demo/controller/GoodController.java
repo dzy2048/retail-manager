@@ -30,7 +30,7 @@ public class GoodController
     public Result<?> queryGood(@RequestParam String name)
     {
         QueryWrapper<Good> wrapper = new QueryWrapper<>();
-        wrapper.eq("good_name",name);
+        wrapper.like("good_name",name);
         List<Good> goodList = service.list(wrapper);
         return Result.success(goodList);
     }
